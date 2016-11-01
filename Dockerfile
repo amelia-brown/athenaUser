@@ -2,7 +2,7 @@ FROM node:argon
 RUN mkdir -p /usr/src/athenaUser
 WORKDIR /usr/src/athenaUser
 COPY package.json /usr/src/athenaUser/
-#RUN npm install
+RUN npm install
 COPY . /urs/src/athenaUser
 EXPOSE 3001
-#CMD ['npm', 'start']
+RUN npm start

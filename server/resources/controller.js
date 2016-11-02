@@ -6,13 +6,7 @@ const bcrypt = mw.bcrypt;
 const User = require('./schema.js');
 const SALT = 10;
 
-function handleErrors (err, res, req, next) {
-  if (res.headersSent) {
-    return next(err);
-  }
-  res.status(500);
-  res.render('error', {error:err});
-}
+
 
 function checkAuth(req, res, cb) {
   let query = {};

@@ -6,6 +6,14 @@ const bcrypt = mw.bcrypt;
 const User = require('./schema.js');
 const SALT = 10;
 
+function handleErrors (err, res, req, next) {
+  if (res.headersSent) {
+    return next(err);
+  }
+  res.status(500);
+  res.render('error', {error:err});
+}
+
 function checkAuth(req, res, cb) {
   let query = {};
   if(req.body.hasOwnProperty('id'))
@@ -65,12 +73,12 @@ module.exports = {
   },
   editUser(req, res) {
     let id = req.body.id;
-    req.body.hasOwnProperty('newPassword') ? 
+    req.body.hasOwnProperty('newPassword') ?
       checkAuth(req, res, data => {
         req.body.password = req.body.newPassword;
         delete req.body.newPassword;
-        bcrypt.hash(req.body.password, SALT, 
-          (err, bcPass) => err ? 
+        bcrypt.hash(req.body.password, SALT,
+          (err, bcPass) => err ?
             res.status(500).send(err)
             : updateHelper(bcPass));
       })
@@ -78,7 +86,7 @@ module.exports = {
     function updateHelper (password) {
       if(password)
         req.body.password = password;
-      else 
+      else
         delete req.body.password;
       User.findOneAndUpdate({_id: id},
         req.body,

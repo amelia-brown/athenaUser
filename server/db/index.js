@@ -13,7 +13,7 @@ module.exports = mw.mongoose.connect(uri, {
     }
   }
 }).connection
-  .on('error', err => console.log(err))
+  .on('error', err => console.log('there is an error here',err))
   .on('open', () => {
     console.log(
       '  ' + chalk.green.bold(String.fromCharCode(0x27A0)) + ' ' +

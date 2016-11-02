@@ -4,7 +4,6 @@ require('./db/index.js');
 const app = mw.express();
 
 
-var handleErrors = //middleware and routes
 app.use(
   require('morgan')('dev'),
   mw.bodyParser.json(),
@@ -16,7 +15,9 @@ app.use(function(err, res, req, next) {
     return next(err);
   }
   res.status(500);
+  console.log('there was an error')
   res.render('error', {error:err});
+
 })
 
 module.exports = app;

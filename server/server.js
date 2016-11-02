@@ -15,7 +15,6 @@ app.use(function(err, res, req, next) {
     return next(err);
   }
   res.status(500);
-  console.log('there was an error')
   res.render('error', {error:err});
 
 })

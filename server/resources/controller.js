@@ -6,6 +6,8 @@ const bcrypt = mw.bcrypt;
 const User = require('./schema.js');
 const SALT = 10;
 
+
+
 function checkAuth(req, res, cb) {
   let query = {};
   if(req.body.hasOwnProperty('id'))
@@ -20,11 +22,9 @@ function checkAuth(req, res, cb) {
         : bcrypt.compare(req.body.password, data.password,
           (err, match) => err ?
             res.status(500).send(err)
-            : match ?
-              cb(data, match)
-              : (req.params.password === data.password) ?
-                cb(data, match)
-                : res.status(401).send(JSON.stringify("invalid password")))
+            : !match ?
+              res.status(401).send(JSON.stringify('invalid password'))
+              : cb(data, match))
   );
 };
 

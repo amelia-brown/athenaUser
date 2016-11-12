@@ -1,5 +1,5 @@
 const DIALECT = 'mongodb';//'postgres';
-const HOST = 'localhost';
+const HOST = process.env.MONGO || '127.0.0.1';
 // const PORT = 5432;
 const DB = 'user';
 // const DB_USR = require('./dbAuth.js').DB_USR;

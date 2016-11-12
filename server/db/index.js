@@ -7,6 +7,7 @@ module.exports = mw.mongoose.connect(uri, {
   db: {native_parser: true},
   server: {
     poolSize: 5,
+    reconnectTries: Number.MAX_VALUE,
     socketOptions: {
       keepAlive: 1000,
       connectTimeoutMS: 30000
@@ -41,3 +42,12 @@ module.exports = mw.mongoose.connect(uri, {
           );
       }));
   });
+
+
+try {
+  mongoose.connect("mongodb://" + db_address);
+  db = mongoose.connection;
+  console.log("Started connection on " + "mongodb://" + uri + ", waiting for it to open...".grey);
+} catch (err) {
+  console.log("Setting up failed to connect to " + uri, err.message);
+}
